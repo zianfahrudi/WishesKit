@@ -1,0 +1,630 @@
+/* WishesKit Styles */
+.wisheskit-wrapper {
+    max-width: 100%;
+    font-family: inherit;
+    margin: 20px;
+}
+
+/* Title */
+.wisheskit-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    font-style: italic;
+    margin-bottom: 20px;
+}
+
+/* Counter Boxes */
+.wisheskit-counters {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.wisheskit-counter-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #1a1a1a;
+    color: #ffffff;
+    border: 2px solid #1a1a1a;
+    border-radius: 8px;
+    padding: 15px 10px;
+    width: 130px;
+    min-width: 130px;
+    max-width: 130px;
+    height: 90px;
+    min-height: 90px;
+    max-height: 90px;
+    text-align: center;
+    flex-shrink: 0;
+    flex-grow: 0;
+    box-sizing: border-box;
+}
+
+.wisheskit-counter-number {
+    font-size: 1.8em;
+    font-weight: bold;
+    line-height: 1.2;
+}
+
+.wisheskit-counter-label {
+    font-size: 0.75em;
+    margin-top: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+/* Form */
+.wisheskit-form {
+    margin-bottom: 20px;
+}
+
+.wisheskit-form input,
+.wisheskit-form textarea,
+.wisheskit-form select {
+    width: 100%;
+    padding: 12px 18px;
+    margin-bottom: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 25px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    color: #333333;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.wisheskit-form textarea {
+    border-radius: 20px;
+    resize: vertical;
+    min-height: 100px;
+}
+
+.wisheskit-form select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    padding-right: 40px;
+}
+
+.wisheskit-form input:focus,
+.wisheskit-form textarea:focus,
+.wisheskit-form select:focus {
+    border-color: #999;
+}
+
+.wisheskit-submit-btn {
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: #1a1a1a;
+    color: #ffffff;
+    border: none;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.wisheskit-submit-btn:hover {
+    opacity: 0.85;
+}
+
+.wisheskit-submit-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.wisheskit-form-message {
+    margin-top: 20px;
+    font-size: 13px;
+}
+
+.wisheskit-form-message.success {
+    color: #4caf50;
+}
+
+.wisheskit-form-message.error {
+    color: #f44336;
+}
+
+/* Comments */
+.wisheskit-comments-list {
+    margin-top: 20px;
+    max-height: 500px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+.wisheskit-comment {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    align-items: flex-start;
+}
+
+.wisheskit-comment-children {
+    margin-left: 50px;
+    margin-top: 20px;
+}
+
+.wisheskit-avatar {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    border-radius: 50%;
+    background-color: #4a90d9;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+.wisheskit-comment-body {
+    flex: 1;
+}
+
+.wisheskit-comment-author {
+    font-weight: bold;
+    font-size: 14px;
+    color: #1a1a1a;
+}
+
+.wisheskit-comment-content {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #444444;
+    line-height: 1.5;
+}
+
+.wisheskit-comment-meta {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 12px;
+}
+
+.wisheskit-comment-date {
+    color: #999999;
+}
+
+.wisheskit-reply-btn {
+    color: #2e7d32;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.wisheskit-reply-btn:hover {
+    opacity: 0.7;
+}
+
+/* Admin: Edit & Delete buttons */
+.wisheskit-edit-btn,
+.wisheskit-delete-btn {
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.3s;
+    font-size: 12px;
+}
+
+.wisheskit-edit-btn {
+    color: #1976d2;
+}
+
+.wisheskit-delete-btn {
+    color: #d32f2f;
+}
+
+.wisheskit-edit-btn:hover,
+.wisheskit-delete-btn:hover {
+    opacity: 0.7;
+}
+
+/* Edit Form */
+.wisheskit-edit-form {
+    display: none;
+    margin-top: 20px;
+}
+
+.wisheskit-edit-form.active {
+    display: block;
+}
+
+.wisheskit-edit-textarea {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    font-size: 13px;
+    outline: none;
+    box-sizing: border-box;
+    resize: vertical;
+    min-height: 60px;
+    margin-bottom: 20px;
+}
+
+.wisheskit-edit-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.wisheskit-edit-save,
+.wisheskit-edit-cancel {
+    padding: 6px 16px;
+    border: none;
+    border-radius: 16px;
+    font-size: 12px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.wisheskit-edit-save {
+    background-color: #1976d2;
+    color: #fff;
+}
+
+.wisheskit-edit-save:hover {
+    opacity: 0.85;
+}
+
+.wisheskit-edit-cancel {
+    background-color: #e0e0e0;
+    color: #555;
+}
+
+.wisheskit-edit-cancel:hover {
+    opacity: 0.8;
+}
+
+/* RSVP Badges */
+.wisheskit-badge-hadir,
+.wisheskit-badge-tidak_hadir,
+.wisheskit-badge-ragu {
+    font-size: 14px;
+    margin-left: 6px;
+    vertical-align: middle;
+}
+
+.wisheskit-badge-hadir {
+    color: #4caf50;
+}
+
+.wisheskit-badge-tidak_hadir {
+    color: #f44336;
+}
+
+.wisheskit-badge-ragu {
+    color: #ff9800;
+}
+
+/* Reply Form */
+.wisheskit-reply-form {
+    margin-top: 20px;
+    margin-left: 50px;
+    padding: 12px;
+    background: #f9f9f9;
+    border-radius: 12px;
+    display: none;
+}
+
+.wisheskit-reply-form.active {
+    display: block;
+}
+
+.wisheskit-reply-form input,
+.wisheskit-reply-form textarea {
+    width: 100%;
+    padding: 10px 14px;
+    margin-bottom: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 20px;
+    font-size: 13px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.wisheskit-reply-form textarea {
+    min-height: 60px;
+    resize: vertical;
+}
+
+.wisheskit-reply-form button {
+    padding: 8px 20px;
+    background-color: #1a1a1a;
+    color: #ffffff;
+    border: none;
+    border-radius: 20px;
+    font-size: 13px;
+    cursor: pointer;
+    margin-right: 8px;
+}
+
+.wisheskit-reply-form .wisheskit-cancel-reply {
+    background: transparent;
+    color: #999;
+    padding: 8px 12px;
+}
+
+/* Scrollbar */
+.wisheskit-comments-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.wisheskit-comments-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.wisheskit-comments-list::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .wisheskit-counters {
+        gap: 8px;
+    }
+
+    .wisheskit-counter-box {
+        width: 100px;
+        min-width: 100px;
+        max-width: 100px;
+        height: 80px;
+        min-height: 80px;
+        max-height: 80px;
+        padding: 10px 8px;
+    }
+
+    .wisheskit-comment-children {
+        margin-left: 30px;
+    }
+}
+
+/* ===== PAGINATION ===== */
+.wisheskit-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 20px;
+    padding: 20px 0;
+}
+
+.wisheskit-page-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #1a1a1a;
+    color: #ffffff;
+    border: none;
+    border-radius: 25px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.wisheskit-page-btn:hover {
+    opacity: 0.85;
+}
+
+.wisheskit-page-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.wisheskit-page-info {
+    font-size: 14px;
+    color: #555555;
+    font-weight: 500;
+}
+
+/* ===== SUCCESS POPUP ===== */
+.wisheskit-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.wisheskit-popup-content {
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 40px 30px;
+    max-width: 420px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    animation: wisheskit-popup-in 0.3s ease;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes wisheskit-popup-in {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.wisheskit-popup-icon {
+    font-size: 60px;
+    color: #4caf50;
+    margin-bottom: 20px;
+    line-height: 1;
+}
+
+.wisheskit-popup-icon i {
+    font-size: inherit;
+}
+
+.wisheskit-popup-icon svg {
+    width: 60px;
+    height: 60px;
+}
+
+.wisheskit-popup-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 20px;
+}
+
+.wisheskit-popup-message {
+    font-size: 14px;
+    color: #555555;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/* Discount Code */
+.wisheskit-popup-discount {
+    background-color: #f5f5f5;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.wisheskit-popup-discount-label {
+    font-size: 12px;
+    color: #777;
+    margin-bottom: 20px;
+}
+
+.wisheskit-popup-discount-code-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.wisheskit-popup-discount-code {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1a1a1a;
+    letter-spacing: 2px;
+    font-family: monospace;
+}
+
+.wisheskit-popup-copy-btn {
+    background: none;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 6px 8px;
+    cursor: pointer;
+    color: #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.wisheskit-popup-copy-btn:hover {
+    background-color: #e8e8e8;
+    color: #333;
+}
+
+.wisheskit-popup-copy-btn.copied {
+    background-color: #4caf50;
+    border-color: #4caf50;
+    color: #fff;
+}
+
+.wisheskit-popup-copy-btn.copied::after {
+    content: ' ✓';
+    font-size: 11px;
+}
+
+.wisheskit-popup-discount-desc {
+    font-size: 11px;
+    color: #999;
+    margin-top: 20px;
+}
+
+/* WhatsApp Button */
+.wisheskit-popup-wa-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background-color: #25d366;
+    color: #ffffff;
+    border: none;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.wisheskit-popup-wa-btn:hover {
+    opacity: 0.85;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.wisheskit-popup-wa-btn svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+/* Close Button */
+.wisheskit-popup-close-btn {
+    display: inline-block;
+    padding: 10px 28px;
+    background-color: #e0e0e0;
+    color: #333333;
+    border: none;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+    margin-top: 20px;
+}
+
+.wisheskit-popup-close-btn:hover {
+    opacity: 0.8;
+}
+
+/* Popup Responsive */
+@media (max-width: 480px) {
+    .wisheskit-popup-content {
+        padding: 30px 20px;
+    }
+
+    .wisheskit-popup-title {
+        font-size: 18px;
+    }
+
+    .wisheskit-popup-discount-code {
+        font-size: 16px;
+    }
+}
