@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WishesKit
  * Description: Wishes & RSVP plugin with Elementor widget. Supports comments, reply, attendance confirmation, and full style customization.
- * Version: 1.2.0
+ * Version: 1.3.0
  * Author: WishesKit
  * Text Domain: wisheskit
  * Requires PHP: 7.4
@@ -13,18 +13,24 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('WISHESKIT_VERSION', '1.2.0');
+define('WISHESKIT_VERSION', '1.3.0');
 define('WISHESKIT_PATH', plugin_dir_path(__FILE__));
 define('WISHESKIT_URL', plugin_dir_url(__FILE__));
 
 /**
- * Register custom comment meta for RSVP
+ * Register custom comment meta for RSVP and WishesKit marker
  */
 function wisheskit_register_meta() {
     register_meta('comment', 'wisheskit_rsvp', [
         'type' => 'string',
         'single' => true,
         'show_in_rest' => true,
+        'sanitize_callback' => 'sanitize_text_field',
+    ]);
+    register_meta('comment', '_wisheskit_comment', [
+        'type' => 'string',
+        'single' => true,
+        'show_in_rest' => false,
         'sanitize_callback' => 'sanitize_text_field',
     ]);
 }
@@ -67,6 +73,23 @@ function wisheskit_enqueue_assets() {
 add_action('wp_enqueue_scripts', 'wisheskit_enqueue_assets');
 
 /**
+ * Get user IP address
+ */
+function wisheskit_get_user_ip() {
+    $ip = '';
+    if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+        $ip = $_SERVER['HTTP_CLIENT_IP'];
+    } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        // Can contain multiple IPs, take the first one
+        $ips = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
+        $ip = trim($ips[0]);
+    } elseif (!empty($_SERVER['REMOTE_ADDR'])) {
+        $ip = $_SERVER['REMOTE_ADDR'];
+    }
+    return sanitize_text_field($ip);
+}
+
+/**
  * AJAX: Submit comment
  */
 function wisheskit_submit_comment() {
@@ -95,9 +118,9 @@ function wisheskit_submit_comment() {
     // Prevent duplicate submission (same name + message within last 5 seconds)
     $recent = get_comments([
         'post_id' => $post_id,
-        'type' => 'wisheskit',
-        'author__in' => [],
-        'author_email' => '',
+        'type' => '',
+        'meta_key' => '_wisheskit_comment',
+        'meta_value' => '1',
         'number' => 5,
         'date_query' => [
             [
@@ -114,15 +137,21 @@ function wisheskit_submit_comment() {
     $comment_data = [
         'comment_post_ID' => $post_id,
         'comment_author' => $name,
+        'comment_author_email' => '',
+        'comment_author_url' => '',
+        'comment_author_IP' => wisheskit_get_user_ip(),
         'comment_content' => $message,
-        'comment_type' => 'wisheskit',
+        'comment_type' => '',
         'comment_parent' => $parent,
         'comment_approved' => 1,
+        'user_id' => 0,
     ];
 
     $comment_id = wp_insert_comment($comment_data);
 
     if ($comment_id) {
+        // Mark as WishesKit comment
+        update_comment_meta($comment_id, '_wisheskit_comment', '1');
         if (!empty($rsvp)) {
             update_comment_meta($comment_id, 'wisheskit_rsvp', $rsvp);
         }
@@ -148,7 +177,8 @@ function wisheskit_load_comments() {
     // Paginated parent comments
     $comments = get_comments([
         'post_id' => $post_id,
-        'type' => 'wisheskit',
+        'meta_key' => '_wisheskit_comment',
+        'meta_value' => '1',
         'status' => 'approve',
         'parent' => 0,
         'orderby' => 'comment_date',
@@ -162,7 +192,8 @@ function wisheskit_load_comments() {
     // Count total parents (for pagination)
     $total_parents = get_comments([
         'post_id' => $post_id,
-        'type' => 'wisheskit',
+        'meta_key' => '_wisheskit_comment',
+        'meta_value' => '1',
         'status' => 'approve',
         'parent' => 0,
         'count' => true,
@@ -171,7 +202,8 @@ function wisheskit_load_comments() {
     // Count RSVP across ALL parent comments (not just current page)
     $all_parents = get_comments([
         'post_id' => $post_id,
-        'type' => 'wisheskit',
+        'meta_key' => '_wisheskit_comment',
+        'meta_value' => '1',
         'status' => 'approve',
         'parent' => 0,
         'fields' => 'ids',
@@ -209,7 +241,8 @@ function wisheskit_format_comments($comments) {
 
         $children = get_comments([
             'parent' => $comment->comment_ID,
-            'type' => 'wisheskit',
+            'meta_key' => '_wisheskit_comment',
+            'meta_value' => '1',
             'status' => 'approve',
             'orderby' => 'comment_date',
             'order' => 'ASC',
@@ -247,7 +280,8 @@ function wisheskit_delete_comment() {
     // Delete child comments first
     $children = get_comments([
         'parent' => $comment_id,
-        'type' => 'wisheskit',
+        'meta_key' => '_wisheskit_comment',
+        'meta_value' => '1',
     ]);
     foreach ($children as $child) {
         wp_delete_comment($child->comment_ID, true);
@@ -292,6 +326,34 @@ function wisheskit_edit_comment() {
     }
 }
 add_action('wp_ajax_wisheskit_edit', 'wisheskit_edit_comment');
+
+/**
+ * Migrate old WishesKit comments (comment_type = 'wisheskit') to new format
+ * Runs once on plugin activation or admin init
+ */
+function wisheskit_migrate_old_comments() {
+    if (get_option('wisheskit_migrated_v13')) {
+        return;
+    }
+
+    $old_comments = get_comments([
+        'type' => 'wisheskit',
+        'number' => 0,
+    ]);
+
+    foreach ($old_comments as $comment) {
+        // Add meta marker
+        update_comment_meta($comment->comment_ID, '_wisheskit_comment', '1');
+        // Change comment type to empty (standard)
+        wp_update_comment([
+            'comment_ID' => $comment->comment_ID,
+            'comment_type' => '',
+        ]);
+    }
+
+    update_option('wisheskit_migrated_v13', true);
+}
+add_action('admin_init', 'wisheskit_migrate_old_comments');
 
 /**
  * Load Elementor widget

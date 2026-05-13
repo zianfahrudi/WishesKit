@@ -597,10 +597,227 @@ class WishesKit_Elementor_Widget extends \Elementor\Widget_Base {
 
         $this->end_controls_section();
 
+        // === STYLE: WRAPPER BACKGROUND ===
+        $this->start_controls_section('section_style_wrapper', [
+            'label' => __('Wrapper Background', 'wisheskit'),
+            'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+        ]);
+
+        $this->add_control('wrapper_bg_color', [
+            'label' => __('Background Color', 'wisheskit'),
+            'type' => \Elementor\Controls_Manager::COLOR,
+            'default' => '',
+            'selectors' => [
+                '{{WRAPPER}} .wisheskit-wrapper' => 'background-color: {{VALUE}};',
+            ],
+        ]);
+
+        $this->add_control('wrapper_bg_image', [
+            'label' => __('Background Image', 'wisheskit'),
+            'type' => \Elementor\Controls_Manager::MEDIA,
+            'default' => [
+                'url' => '',
+            ],
+        ]);
+
+        $this->add_control('wrapper_bg_size', [
+            'label' => __('Background Size', 'wisheskit'),
+            'type' => \Elementor\Controls_Manager::SELECT,
+            'default' => 'cover',
+            'options' => [
+                'cover' => __('Cover', 'wisheskit'),
+                'contain' => __('Contain', 'wisheskit'),
+                'auto' => __('Auto', 'wisheskit'),
+            ],
+            'selectors' => [
+                '{{WRAPPER}} .wisheskit-wrapper' => 'background-size: {{VALUE}};',
+            ],
+            'condition' => [
+                'wrapper_bg_image[url]!' => '',
+            ],
+        ]);
+
+        $this->add_control('wrapper_bg_position', [
+            'label' => __('Background Position', 'wisheskit'),
+            'type' => \Elementor\Controls_Manager::SELECT,
+            'default' => 'center center',
+            'options' => [
+                'center center' => __('Center Center', 'wisheskit'),
+                'center top' => __('Center Top', 'wisheskit'),
+                'center bottom' => __('Center Bottom', 'wisheskit'),
+                'left center' => __('Left Center', 'wisheskit'),
+                'right center' => __('Right Center', 'wisheskit'),
+            ],
+            'selectors' => [
+                '{{WRAPPER}} .wisheskit-wrapper' => 'background-position: {{VALUE}};',
+            ],
+            'condition' => [
+                'wrapper_bg_image[url]!' => '',
+            ],
+        ]);
+
+        $this->add_control('wrapper_bg_repeat', [
+            'label' => __('Background Repeat', 'wisheskit'),
+            'type' => \Elementor\Controls_Manager::SELECT,
+            'default' => 'no-repeat',
+            'options' => [
+                'no-repeat' => __('No Repeat', 'wisheskit'),
+                'repeat' => __('Repeat', 'wisheskit'),
+                'repeat-x' => __('Repeat X', 'wisheskit'),
+                'repeat-y' => __('Repeat Y', 'wisheskit'),
+            ],
+            'selectors' => [
+                '{{WRAPPER}} .wisheskit-wrapper' => 'background-repeat: {{VALUE}};',
+            ],
+            'condition' => [
+                'wrapper_bg_image[url]!' => '',
+            ],
+        ]);
+
+        $this->add_control('wrapper_bg_overlay', [
+            'label' => __('Background Overlay Color', 'wisheskit'),
+            'type' => \Elementor\Controls_Manager::COLOR,
+            'default' => '',
+            'description' => __('Add a semi-transparent overlay on top of the background image.', 'wisheskit'),
+            'condition' => [
+                'wrapper_bg_image[url]!' => '',
+            ],
+        ]);
+
+        $this->add_control('wrapper_padding', [
+            'label' => __('Padding', 'wisheskit'),
+            'type' => \Elementor\Controls_Manager::DIMENSIONS,
+            'size_units' => ['px', 'em', '%'],
+            'default' => [
+                'top' => '20',
+                'right' => '20',
+                'bottom' => '20',
+                'left' => '20',
+                'unit' => 'px',
+            ],
+            'selectors' => [
+                '{{WRAPPER}} .wisheskit-wrapper' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+            ],
+        ]);
+
+        $this->add_control('wrapper_border_radius', [
+            'label' => __('Border Radius', 'wisheskit'),
+            'type' => \Elementor\Controls_Manager::DIMENSIONS,
+            'size_units' => ['px', '%'],
+            'default' => [
+                'top' => '0',
+                'right' => '0',
+                'bottom' => '0',
+                'left' => '0',
+                'unit' => 'px',
+            ],
+            'selectors' => [
+                '{{WRAPPER}} .wisheskit-wrapper' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+            ],
+        ]);
+
+        $this->end_controls_section();
+
         // === STYLE: COUNTER BOXES ===
         $this->start_controls_section('section_style_counter', [
             'label' => __('Counter Boxes', 'wisheskit'),
             'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+        ]);
+
+        $this->add_responsive_control('counter_box_width', [
+            'label' => __('Box Width', 'wisheskit'),
+            'type' => \Elementor\Controls_Manager::SLIDER,
+            'size_units' => ['px', '%'],
+            'range' => [
+                'px' => [
+                    'min' => 60,
+                    'max' => 300,
+                ],
+                '%' => [
+                    'min' => 20,
+                    'max' => 100,
+                ],
+            ],
+            'default' => [
+                'unit' => 'px',
+                'size' => 130,
+            ],
+            'selectors' => [
+                '{{WRAPPER}} .wisheskit-counter-box' => 'width: {{SIZE}}{{UNIT}}; min-width: {{SIZE}}{{UNIT}}; max-width: {{SIZE}}{{UNIT}};',
+            ],
+        ]);
+
+        $this->add_responsive_control('counter_box_height', [
+            'label' => __('Box Height', 'wisheskit'),
+            'type' => \Elementor\Controls_Manager::SLIDER,
+            'size_units' => ['px'],
+            'range' => [
+                'px' => [
+                    'min' => 50,
+                    'max' => 200,
+                ],
+            ],
+            'default' => [
+                'unit' => 'px',
+                'size' => 90,
+            ],
+            'selectors' => [
+                '{{WRAPPER}} .wisheskit-counter-box' => 'height: {{SIZE}}{{UNIT}}; min-height: {{SIZE}}{{UNIT}}; max-height: {{SIZE}}{{UNIT}};',
+            ],
+        ]);
+
+        $this->add_responsive_control('counter_gap', [
+            'label' => __('Gap Between Boxes', 'wisheskit'),
+            'type' => \Elementor\Controls_Manager::SLIDER,
+            'size_units' => ['px'],
+            'range' => [
+                'px' => [
+                    'min' => 0,
+                    'max' => 40,
+                ],
+            ],
+            'default' => [
+                'unit' => 'px',
+                'size' => 10,
+            ],
+            'selectors' => [
+                '{{WRAPPER}} .wisheskit-counters' => 'gap: {{SIZE}}{{UNIT}};',
+            ],
+        ]);
+
+        $this->add_responsive_control('counter_box_padding', [
+            'label' => __('Box Padding', 'wisheskit'),
+            'type' => \Elementor\Controls_Manager::DIMENSIONS,
+            'size_units' => ['px', 'em'],
+            'default' => [
+                'top' => '15',
+                'right' => '10',
+                'bottom' => '15',
+                'left' => '10',
+                'unit' => 'px',
+            ],
+            'selectors' => [
+                '{{WRAPPER}} .wisheskit-counter-box' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+            ],
+        ]);
+
+        $this->add_responsive_control('counter_number_label_gap', [
+            'label' => __('Gap Number & Label', 'wisheskit'),
+            'type' => \Elementor\Controls_Manager::SLIDER,
+            'size_units' => ['px'],
+            'range' => [
+                'px' => [
+                    'min' => 0,
+                    'max' => 30,
+                ],
+            ],
+            'default' => [
+                'unit' => 'px',
+                'size' => 6,
+            ],
+            'selectors' => [
+                '{{WRAPPER}} .wisheskit-counter-label' => 'margin-top: {{SIZE}}{{UNIT}};',
+            ],
         ]);
 
         $this->add_control('counter_bg_color', [
@@ -627,6 +844,22 @@ class WishesKit_Elementor_Widget extends \Elementor\Widget_Base {
             'default' => '#1a1a1a',
             'selectors' => [
                 '{{WRAPPER}} .wisheskit-counter-box' => 'border-color: {{VALUE}};',
+            ],
+        ]);
+
+        $this->add_control('counter_border_radius', [
+            'label' => __('Border Radius', 'wisheskit'),
+            'type' => \Elementor\Controls_Manager::DIMENSIONS,
+            'size_units' => ['px', '%'],
+            'default' => [
+                'top' => '8',
+                'right' => '8',
+                'bottom' => '8',
+                'left' => '8',
+                'unit' => 'px',
+            ],
+            'selectors' => [
+                '{{WRAPPER}} .wisheskit-counter-box' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
             ],
         ]);
 
@@ -927,8 +1160,20 @@ class WishesKit_Elementor_Widget extends \Elementor\Widget_Base {
     protected function render() {
         $settings = $this->get_settings_for_display();
         $post_id = get_the_ID();
+
+        // Build wrapper inline styles for background image
+        $wrapper_style = '';
+        if (!empty($settings['wrapper_bg_image']['url'])) {
+            $wrapper_style .= 'background-image: url(' . esc_url($settings['wrapper_bg_image']['url']) . ');';
+        }
+
+        // Build overlay style
+        $has_overlay = !empty($settings['wrapper_bg_overlay']) && !empty($settings['wrapper_bg_image']['url']);
         ?>
-        <div class="wisheskit-wrapper" data-post-id="<?php echo esc_attr($post_id); ?>" data-per-page="<?php echo esc_attr(intval($settings['per_page'] ?? 15)); ?>">
+        <div class="wisheskit-wrapper<?php echo $has_overlay ? ' wisheskit-wrapper-has-overlay' : ''; ?>" data-post-id="<?php echo esc_attr($post_id); ?>" data-per-page="<?php echo esc_attr(intval($settings['per_page'] ?? 15)); ?>"<?php if ($wrapper_style) : ?> style="<?php echo esc_attr($wrapper_style); ?>"<?php endif; ?>>
+            <?php if ($has_overlay) : ?>
+            <div class="wisheskit-wrapper-overlay" style="background-color: <?php echo esc_attr($settings['wrapper_bg_overlay']); ?>;"></div>
+            <?php endif; ?>
             <!-- Title -->
             <div class="wisheskit-title">
                 <span class="wisheskit-total-count">0</span> <?php echo esc_html($settings['title_text']); ?>

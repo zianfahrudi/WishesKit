@@ -69,27 +69,28 @@
                 self.cancelEdit(commentId);
             });
 
-            this.$wrapper.on('click.wisheskit', '.wisheskit-popup-close-btn', function () {
+            // Popup events bound on document since popups are moved to body
+            $(document).on('click.wisheskit', '.wisheskit-popup-close-btn', function () {
                 self.hidePopup();
             });
 
-            this.$wrapper.on('click.wisheskit', '.wisheskit-popup-overlay', function (e) {
+            $(document).on('click.wisheskit', '.wisheskit-popup-overlay', function (e) {
                 if ($(e.target).hasClass('wisheskit-popup-overlay')) {
                     self.hidePopup();
                 }
             });
 
-            this.$wrapper.on('click.wisheskit', '.wisheskit-qr-popup-close-btn', function () {
+            $(document).on('click.wisheskit', '.wisheskit-qr-popup-close-btn', function () {
                 self.hideQrPopup();
             });
 
-            this.$wrapper.on('click.wisheskit', '.wisheskit-qr-popup-overlay', function (e) {
+            $(document).on('click.wisheskit', '.wisheskit-qr-popup-overlay', function (e) {
                 if ($(e.target).hasClass('wisheskit-qr-popup-overlay')) {
                     self.hideQrPopup();
                 }
             });
 
-            this.$wrapper.on('click.wisheskit', '.wisheskit-popup-copy-btn', function () {
+            $(document).on('click.wisheskit', '.wisheskit-popup-copy-btn', function () {
                 var code = $(this).data('code');
                 self.copyToClipboard(code, $(this));
             });
@@ -435,29 +436,33 @@
         showPopup: function () {
             var $popup = this.$wrapper.find('.wisheskit-popup-overlay');
             if ($popup.length) {
+                $popup.appendTo('body');
                 $popup.fadeIn(300);
                 $('body').css('overflow', 'hidden');
             }
         },
 
         hidePopup: function () {
-            var $popup = this.$wrapper.find('.wisheskit-popup-overlay');
-            $popup.fadeOut(300);
-            $('body').css('overflow', '');
+            var $popup = $('body > .wisheskit-popup-overlay');
+            $popup.fadeOut(300, function () {
+                $('body').css('overflow', '');
+            });
         },
 
         showQrPopup: function () {
             var $popup = this.$wrapper.find('.wisheskit-qr-popup-overlay');
             if ($popup.length) {
+                $popup.appendTo('body');
                 $popup.fadeIn(300);
                 $('body').css('overflow', 'hidden');
             }
         },
 
         hideQrPopup: function () {
-            var $popup = this.$wrapper.find('.wisheskit-qr-popup-overlay');
-            $popup.fadeOut(300);
-            $('body').css('overflow', '');
+            var $popup = $('body > .wisheskit-qr-popup-overlay');
+            $popup.fadeOut(300, function () {
+                $('body').css('overflow', '');
+            });
         },
 
         copyToClipboard: function (text, $btn) {
