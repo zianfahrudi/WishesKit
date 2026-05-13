@@ -263,6 +263,63 @@ class WishesKit_Elementor_Widget extends \Elementor\Widget_Base {
 
         $this->end_controls_section();
 
+        // === CONTENT: QR CODE POPUP ===
+        $this->start_controls_section('section_qr_popup', [
+            'label' => __('QR Code Popup', 'wisheskit'),
+            'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
+        ]);
+
+        $this->add_control('qr_popup_enable', [
+            'label' => __('Enable QR Popup (on "Hadir")', 'wisheskit'),
+            'type' => \Elementor\Controls_Manager::SWITCHER,
+            'label_on' => __('Yes', 'wisheskit'),
+            'label_off' => __('No', 'wisheskit'),
+            'return_value' => 'yes',
+            'default' => '',
+            'description' => __('Show QR Code popup when user confirms attendance as "Hadir".', 'wisheskit'),
+        ]);
+
+        $this->add_control('qr_popup_image', [
+            'label' => __('QR Code Image', 'wisheskit'),
+            'type' => \Elementor\Controls_Manager::MEDIA,
+            'default' => [
+                'url' => '',
+            ],
+            'description' => __('Select QR Code image from media library.', 'wisheskit'),
+            'condition' => [
+                'qr_popup_enable' => 'yes',
+            ],
+        ]);
+
+        $this->add_control('qr_popup_title', [
+            'label' => __('QR Popup Title', 'wisheskit'),
+            'type' => \Elementor\Controls_Manager::TEXT,
+            'default' => 'Scan QR Code',
+            'condition' => [
+                'qr_popup_enable' => 'yes',
+            ],
+        ]);
+
+        $this->add_control('qr_popup_message', [
+            'label' => __('QR Popup Message', 'wisheskit'),
+            'type' => \Elementor\Controls_Manager::TEXTAREA,
+            'default' => 'Tunjukkan QR Code ini saat hadir di acara sebagai tanda konfirmasi kehadiran Anda.',
+            'condition' => [
+                'qr_popup_enable' => 'yes',
+            ],
+        ]);
+
+        $this->add_control('qr_popup_close_text', [
+            'label' => __('Close Button Text', 'wisheskit'),
+            'type' => \Elementor\Controls_Manager::TEXT,
+            'default' => 'Tutup',
+            'condition' => [
+                'qr_popup_enable' => 'yes',
+            ],
+        ]);
+
+        $this->end_controls_section();
+
         // === STYLE: POPUP ===
         $this->start_controls_section('section_style_popup', [
             'label' => __('Success Popup', 'wisheskit'),
@@ -424,6 +481,118 @@ class WishesKit_Elementor_Widget extends \Elementor\Widget_Base {
             'name' => 'popup_discount_code_typography',
             'label' => __('Discount Code Typography', 'wisheskit'),
             'selector' => '{{WRAPPER}} .wisheskit-popup-discount-code',
+        ]);
+
+        $this->end_controls_section();
+
+        // === STYLE: QR CODE POPUP ===
+        $this->start_controls_section('section_style_qr_popup', [
+            'label' => __('QR Code Popup', 'wisheskit'),
+            'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+            'condition' => [
+                'qr_popup_enable' => 'yes',
+            ],
+        ]);
+
+        $this->add_control('qr_popup_overlay_color', [
+            'label' => __('Overlay Color', 'wisheskit'),
+            'type' => \Elementor\Controls_Manager::COLOR,
+            'default' => 'rgba(0,0,0,0.7)',
+            'selectors' => [
+                '{{WRAPPER}} .wisheskit-qr-popup-overlay' => 'background-color: {{VALUE}};',
+            ],
+        ]);
+
+        $this->add_control('qr_popup_bg_color', [
+            'label' => __('Popup Background', 'wisheskit'),
+            'type' => \Elementor\Controls_Manager::COLOR,
+            'default' => '#ffffff',
+            'selectors' => [
+                '{{WRAPPER}} .wisheskit-qr-popup-content' => 'background-color: {{VALUE}};',
+            ],
+        ]);
+
+        $this->add_control('qr_popup_border_radius', [
+            'label' => __('Popup Border Radius', 'wisheskit'),
+            'type' => \Elementor\Controls_Manager::DIMENSIONS,
+            'size_units' => ['px', '%'],
+            'default' => [
+                'top' => '16',
+                'right' => '16',
+                'bottom' => '16',
+                'left' => '16',
+                'unit' => 'px',
+            ],
+            'selectors' => [
+                '{{WRAPPER}} .wisheskit-qr-popup-content' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+            ],
+        ]);
+
+        $this->add_control('qr_popup_title_color', [
+            'label' => __('Title Color', 'wisheskit'),
+            'type' => \Elementor\Controls_Manager::COLOR,
+            'default' => '#1a1a1a',
+            'selectors' => [
+                '{{WRAPPER}} .wisheskit-qr-popup-title' => 'color: {{VALUE}};',
+            ],
+        ]);
+
+        $this->add_group_control(\Elementor\Group_Control_Typography::get_type(), [
+            'name' => 'qr_popup_title_typography',
+            'label' => __('Title Typography', 'wisheskit'),
+            'selector' => '{{WRAPPER}} .wisheskit-qr-popup-title',
+        ]);
+
+        $this->add_control('qr_popup_message_color', [
+            'label' => __('Message Color', 'wisheskit'),
+            'type' => \Elementor\Controls_Manager::COLOR,
+            'default' => '#555555',
+            'selectors' => [
+                '{{WRAPPER}} .wisheskit-qr-popup-message' => 'color: {{VALUE}};',
+            ],
+        ]);
+
+        $this->add_group_control(\Elementor\Group_Control_Typography::get_type(), [
+            'name' => 'qr_popup_message_typography',
+            'label' => __('Message Typography', 'wisheskit'),
+            'selector' => '{{WRAPPER}} .wisheskit-qr-popup-message',
+        ]);
+
+        $this->add_control('qr_popup_image_size', [
+            'label' => __('QR Image Size', 'wisheskit'),
+            'type' => \Elementor\Controls_Manager::SLIDER,
+            'size_units' => ['px'],
+            'range' => [
+                'px' => [
+                    'min' => 100,
+                    'max' => 400,
+                ],
+            ],
+            'default' => [
+                'unit' => 'px',
+                'size' => 200,
+            ],
+            'selectors' => [
+                '{{WRAPPER}} .wisheskit-qr-popup-image img' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
+            ],
+        ]);
+
+        $this->add_control('qr_popup_close_bg_color', [
+            'label' => __('Close Button Background', 'wisheskit'),
+            'type' => \Elementor\Controls_Manager::COLOR,
+            'default' => '#e0e0e0',
+            'selectors' => [
+                '{{WRAPPER}} .wisheskit-qr-popup-close-btn' => 'background-color: {{VALUE}};',
+            ],
+        ]);
+
+        $this->add_control('qr_popup_close_text_color', [
+            'label' => __('Close Button Text Color', 'wisheskit'),
+            'type' => \Elementor\Controls_Manager::COLOR,
+            'default' => '#333333',
+            'selectors' => [
+                '{{WRAPPER}} .wisheskit-qr-popup-close-btn' => 'color: {{VALUE}};',
+            ],
         ]);
 
         $this->end_controls_section();
@@ -840,6 +1009,20 @@ class WishesKit_Elementor_Widget extends \Elementor\Widget_Base {
                     <?php endif; ?>
 
                     <button type="button" class="wisheskit-popup-close-btn"><?php echo esc_html($settings['popup_close_text']); ?></button>
+                </div>
+            </div>
+            <?php endif; ?>
+
+            <!-- QR Code Popup -->
+            <?php if ($settings['qr_popup_enable'] === 'yes' && !empty($settings['qr_popup_image']['url'])) : ?>
+            <div class="wisheskit-qr-popup-overlay" style="display:none;">
+                <div class="wisheskit-qr-popup-content">
+                    <div class="wisheskit-qr-popup-title"><?php echo esc_html($settings['qr_popup_title']); ?></div>
+                    <div class="wisheskit-qr-popup-image">
+                        <img src="<?php echo esc_url($settings['qr_popup_image']['url']); ?>" alt="QR Code" />
+                    </div>
+                    <div class="wisheskit-qr-popup-message"><?php echo esc_html($settings['qr_popup_message']); ?></div>
+                    <button type="button" class="wisheskit-qr-popup-close-btn"><?php echo esc_html($settings['qr_popup_close_text']); ?></button>
                 </div>
             </div>
             <?php endif; ?>

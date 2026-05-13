@@ -628,3 +628,94 @@
         font-size: 16px;
     }
 }
+
+
+/* ===== QR CODE POPUP ===== */
+.wisheskit-qr-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.wisheskit-qr-popup-content {
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 40px 30px;
+    max-width: 380px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    animation: wisheskit-popup-in 0.3s ease;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.wisheskit-qr-popup-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 20px;
+}
+
+.wisheskit-qr-popup-image {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wisheskit-qr-popup-image img {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+    border-radius: 8px;
+    border: 2px solid #f0f0f0;
+}
+
+.wisheskit-qr-popup-message {
+    font-size: 14px;
+    color: #555555;
+    line-height: 1.6;
+    margin-bottom: 24px;
+}
+
+.wisheskit-qr-popup-close-btn {
+    display: inline-block;
+    padding: 10px 28px;
+    background-color: #e0e0e0;
+    color: #333333;
+    border: none;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.wisheskit-qr-popup-close-btn:hover {
+    opacity: 0.8;
+}
+
+/* QR Popup Responsive */
+@media (max-width: 480px) {
+    .wisheskit-qr-popup-content {
+        padding: 30px 20px;
+    }
+
+    .wisheskit-qr-popup-title {
+        font-size: 18px;
+    }
+
+    .wisheskit-qr-popup-image img {
+        width: 160px;
+        height: 160px;
+    }
+}

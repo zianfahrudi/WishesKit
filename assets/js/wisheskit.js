@@ -79,6 +79,16 @@
                 }
             });
 
+            this.$wrapper.on('click.wisheskit', '.wisheskit-qr-popup-close-btn', function () {
+                self.hideQrPopup();
+            });
+
+            this.$wrapper.on('click.wisheskit', '.wisheskit-qr-popup-overlay', function (e) {
+                if ($(e.target).hasClass('wisheskit-qr-popup-overlay')) {
+                    self.hideQrPopup();
+                }
+            });
+
             this.$wrapper.on('click.wisheskit', '.wisheskit-popup-copy-btn', function () {
                 var code = $(this).data('code');
                 self.copyToClipboard(code, $(this));
@@ -174,7 +184,13 @@
                         $form.find('.wisheskit-input-rsvp').val('');
                         self.currentPage = 1;
                         self.loadComments();
-                        self.showPopup();
+
+                        // Show QR popup if RSVP is "hadir" and QR popup exists
+                        if (rsvp === 'hadir' && self.$wrapper.find('.wisheskit-qr-popup-overlay').length) {
+                            self.showQrPopup();
+                        } else {
+                            self.showPopup();
+                        }
                     } else {
                         $msg.removeClass('success').addClass('error').text(response.data.message);
                     }
@@ -426,6 +442,20 @@
 
         hidePopup: function () {
             var $popup = this.$wrapper.find('.wisheskit-popup-overlay');
+            $popup.fadeOut(300);
+            $('body').css('overflow', '');
+        },
+
+        showQrPopup: function () {
+            var $popup = this.$wrapper.find('.wisheskit-qr-popup-overlay');
+            if ($popup.length) {
+                $popup.fadeIn(300);
+                $('body').css('overflow', 'hidden');
+            }
+        },
+
+        hideQrPopup: function () {
+            var $popup = this.$wrapper.find('.wisheskit-qr-popup-overlay');
             $popup.fadeOut(300);
             $('body').css('overflow', '');
         },
